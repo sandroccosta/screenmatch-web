@@ -1,6 +1,8 @@
 package br.com.sandrodev.screenmatch_web;
 
+import br.com.sandrodev.screenmatch_web.model.DadosSerie;
 import br.com.sandrodev.screenmatch_web.service.ConsumoApi;
+import br.com.sandrodev.screenmatch_web.service.ConverteDados;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,8 +17,13 @@ public class ScreenmatchWebApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		ConsumoApi consumoApi = new ConsumoApi();
-		var json = consumoApi.obterDados("https://www.omdbapi.com/?t=gilmore+girls&Season=1&apikey=d24567b9");
+		var json = consumoApi.obterDados("https://www.omdbapi.com/?t=gilmore+girls&apikey=d24567b9");
 
-		System.out.println(json);
+		System.out.println("json:" + json);
+		System.out.println("------------------------------------");
+		ConverteDados converso = new ConverteDados();
+
+		DadosSerie dadosSeries = converso.obterDados(json, DadosSerie.class);
+		System.out.println("Dados da série: " + dadosSeries);
 	}
 }
